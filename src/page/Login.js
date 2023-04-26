@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authenticateAction } from "../redux/actions/authenticateAction";
 
-const Login = ({ setAuthenticate, authenticate }) => {
+const Login = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispath = useDispatch();
+  const authenticate = useSelector((state) => state.auth.authenticate);
   const loginUser = (event) => {
     event.preventDefault();
     dispath(authenticateAction.login(id, password));
+    navigate('/');
     // if (authenticate === false) {
     //   console.log("login user!!!");
     //   dispath();
@@ -45,9 +47,7 @@ const Login = ({ setAuthenticate, authenticate }) => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
+     
         <Button variant="danger" type="submit">
           {authenticate === true ? "로그아웃" : "로그인"}
         </Button>

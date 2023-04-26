@@ -3,7 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-const Navbar = ({ authenticate, setAuthenticate }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { authenticateAction } from "../redux/actions/authenticateAction";
+const Navbar = () => {
+  const dispatch = useDispatch();
+  const authenticate = useSelector((state) => state.auth.authenticate);
+
   const menuList = [
     "여성",
     "Divied",
@@ -21,8 +26,8 @@ const Navbar = ({ authenticate, setAuthenticate }) => {
     if (authenticate === false) {
       navigate("/login");
     } else {
-      navigate("/?q=");
-      setAuthenticate(false);
+      dispatch(authenticateAction.logout());
+      navigate("/");
     }
   };
 
